@@ -59,6 +59,28 @@ You can then access your Nextcloud instance at [http://nextcloud.local](http://n
 > git fetch origin
 > ```
 
+### Setup with rootless docker engine
+
+If you run docker engine directly and in rootless mode, you have to follow these steps additionally: 
+
+#### Give the binary permissions to bind to privileged ports
+
+``` bash
+sudo setcap 'CAP_NET_BIND_SERVICE+ep' /usr/bin/rootlesskit
+```
+
+You need to reboot for the changes to have effects.
+
+#### Edit the location of your docker socket 
+
+Manually add `DOCKER_SOCKET_PATH=/var/run/user/1000/docker.sock` to your .env file after running bootstrap.sh
+
+#### Edit your hosts file
+
+In debian based distributions, add the following to `/etc/hosts`
+
+```127.0.0.1       nextcloud.local```
+
 
 ### Standalone containers
 
